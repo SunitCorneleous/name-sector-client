@@ -1,6 +1,6 @@
 import React from "react";
 
-const DataDisplay = () => {
+const DataDisplay = ({ data, isLoading }) => {
   return (
     <div className="p-4 md:p-8 overflow-x-auto md:flex-1">
       <table className="table w-full text-sm">
@@ -13,14 +13,20 @@ const DataDisplay = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Yes</td>
-            <td>
-              <button className="btn btn-sm btn-primary">Edit</button>
-            </td>
-          </tr>
+          {isLoading
+            ? "Loading.."
+            : data?.map(person => {
+                return (
+                  <tr key={person._id}>
+                    <td>{person.name}</td>
+                    <td>{person.sector}</td>
+                    <td>{person.terms ? "Yes" : "No"}</td>
+                    <td>
+                      <button className="btn btn-sm btn-primary">Edit</button>
+                    </td>
+                  </tr>
+                );
+              })}
         </tbody>
       </table>
     </div>
