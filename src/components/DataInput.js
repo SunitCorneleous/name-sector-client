@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const DataInput = () => {
+const DataInput = ({ refetch }) => {
   const [terms, setTerms] = useState(false);
   const [sectors, setSectors] = useState([]);
 
@@ -35,13 +35,14 @@ const DataInput = () => {
       .then(res => res.json())
       .then(data => {
         if (data.acknowledged) {
+          refetch();
           alert("Data inserted successfully");
         }
       });
   };
 
   return (
-    <div className="p-4 m-3 md:p-8 shadow-lg max-w-full md:flex-1">
+    <div className="p-4 m-3 md:p-8 shadow-lg max-w-full h-full md:flex-1">
       <form onSubmit={submitHandler}>
         <div className="form-control w-full">
           <label className="label">
