@@ -25,7 +25,19 @@ const DataInput = () => {
       terms,
     };
 
-    console.log(data);
+    fetch("http://localhost:5000/data-input", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.acknowledged) {
+          alert("Data inserted successfully");
+        }
+      });
   };
 
   return (
@@ -44,12 +56,9 @@ const DataInput = () => {
         </div>
         <div className="form-control w-full">
           <label className="label">
-            <span className="label-text">Enter your sector:</span>
+            <span className="label-text">Select your sector:</span>
           </label>
           <select name="sector" className="select select-bordered">
-            <option disabled defaultValue>
-              select your sector
-            </option>
             {sectors.map(sector => (
               <option key={sector._id} value={sector.name}>
                 {sector.name}
