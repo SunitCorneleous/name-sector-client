@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import DataDisplay from "./components/DataDisplay";
+import DataInput from "./components/DataInput";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="max-w-[1280px] mx-auto">
+      <h1 className="text-center md:text-2xl font-bold py-4">
+        Enter your name and the sector you are related
+      </h1>
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <DataInput></DataInput>
+        <DataDisplay></DataDisplay>
+      </div>
     </div>
   );
 }
