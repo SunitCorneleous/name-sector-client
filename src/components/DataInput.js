@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 const DataInput = ({ refetch }) => {
-  const [terms, setTerms] = useState(false);
   const [sectors, setSectors] = useState([]);
+  const [terms, setTerms] = useState(false);
 
   // sectors
   useEffect(() => {
     fetch("http://localhost:5000/sectors")
       .then(res => res.json())
-      .then(data => setSectors(data));
+      .then(data => {
+        setSectors(data[0].sectors);
+      });
   }, []);
 
   const submitHandler = e => {
@@ -25,20 +27,28 @@ const DataInput = ({ refetch }) => {
       terms,
     };
 
-    fetch("http://localhost:5000/data-input", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.acknowledged) {
-          refetch();
-          alert("Data inserted successfully");
-        }
-      });
+    if (name === "") {
+      return alert("enter valid name");
+    } else if (sector === "select a sector") {
+      return alert("select a sector sector");
+    } else {
+      fetch("http://localhost:5000/data-input", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.acknowledged) {
+            refetch();
+            alert("Data inserted successfully");
+            form.reset();
+            setTerms(false);
+          }
+        });
+    }
   };
 
   return (
@@ -60,20 +70,21 @@ const DataInput = ({ refetch }) => {
             <span className="label-text">Select your sector:</span>
           </label>
           <select name="sector" className="select select-bordered">
-            {sectors.map(sector => (
-              <option key={sector._id} value={sector.name}>
-                {sector.name}
+            <option defaultChecked>select a sector</option>
+            {sectors?.map((sector, i) => (
+              <option key={i} value={sector}>
+                {sector}
               </option>
             ))}
           </select>
         </div>
-        <div className="form-control w-2/4 md:w-1/4">
+        <div className="form-control w-[50%] md:w-[30%]">
           <label className="label cursor-pointer">
             <input
               name="terms"
-              onChange={() => setTerms(!terms)}
               type="checkbox"
               className="checkbox checkbox-primary"
+              onChange={() => setTerms(!terms)}
             />
             <span className="label-text">Agree the Terms</span>
           </label>

@@ -10,8 +10,8 @@ const DataDisplay = ({ data, isLoading }) => {
     );
   } else {
     return (
-      <div className="p-4 md:p-8 overflow-x-auto md:flex-1">
-        <table className="table w-full text-sm">
+      <div className="m-3 overflow-x-auto md:overflow-x-visible md:flex-1 shadow-lg">
+        <table className="table w-full text-sm mx-auto">
           <thead>
             <tr>
               <th>Name</th>
