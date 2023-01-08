@@ -33,14 +33,17 @@ const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit, refetch }) => {
     } else if (sector === "select a sector") {
       return alert("select a sector sector");
     } else {
-      fetch(`http://localhost:5000/edit-person-data/${dataToBeEdit._id}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${sessionToken}`,
-        },
-        body: JSON.stringify(data),
-      })
+      fetch(
+        `https://name-sector-server.vercel.app/edit-person-data/${dataToBeEdit._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${sessionToken}`,
+          },
+          body: JSON.stringify(data),
+        }
+      )
         .then(res => res.json())
         .then(data => {
           if (data.modifiedCount) {

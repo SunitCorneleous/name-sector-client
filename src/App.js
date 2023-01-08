@@ -9,7 +9,7 @@ function App() {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["persons"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/persons");
+      const res = await fetch("https://name-sector-server.vercel.app/persons");
 
       const data = await res.json();
 
@@ -22,7 +22,7 @@ function App() {
 
   // sectors
   useEffect(() => {
-    fetch("http://localhost:5000/sectors")
+    fetch("https://name-sector-server.vercel.app/sectors")
       .then(res => res.json())
       .then(data => {
         setSectors(data[0].sectors);

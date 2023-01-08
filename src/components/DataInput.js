@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const DataInput = ({ refetch, sectors }) => {
   const [terms, setTerms] = useState(false);
@@ -7,7 +8,7 @@ const DataInput = ({ refetch, sectors }) => {
     const currentTime = Math.floor(Date.now() / 1000);
 
     const res = await fetch(
-      `http://localhost:5000/session-id?time=${currentTime}`
+      `https://name-sector-server.vercel.app/session-id?time=${currentTime}`
     );
     const data = await res.json();
 
@@ -41,7 +42,7 @@ const DataInput = ({ refetch, sectors }) => {
     } else if (sector === "select a sector") {
       return alert("select a sector sector");
     } else {
-      fetch("http://localhost:5000/data-input", {
+      fetch("https://name-sector-server.vercel.app/data-input", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -52,7 +53,7 @@ const DataInput = ({ refetch, sectors }) => {
         .then(data => {
           if (data.acknowledged) {
             refetch();
-            alert("Data inserted successfully");
+            toast.success("Data added successfully");
             form.reset();
             setTerms(false);
           }
