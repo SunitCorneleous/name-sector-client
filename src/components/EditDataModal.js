@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit, refetch }) => {
   const [terms, setTerms] = useState("loading");
@@ -43,9 +44,9 @@ const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit, refetch }) => {
         .then(res => res.json())
         .then(data => {
           if (data.modifiedCount) {
+            toast.success("Data edited successfully");
             refetch();
             setDataToBeEdit(null);
-            alert("Data edited successfully");
           }
         });
     }
