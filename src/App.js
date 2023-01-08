@@ -41,11 +41,14 @@ function App() {
           isLoading={isLoading}
           setDataToBeEdit={setDataToBeEdit}
         ></DataDisplay>
-        <EditDataModal
-          dataToBeEdit={dataToBeEdit}
-          setDataToBeEdit={setDataToBeEdit}
-          sectors={sectors}
-        ></EditDataModal>
+        {dataToBeEdit !== null && (
+          <EditDataModal
+            refetch={refetch}
+            dataToBeEdit={dataToBeEdit}
+            setDataToBeEdit={setDataToBeEdit}
+            sectors={sectors}
+          ></EditDataModal>
+        )}
       </div>
     </div>
   );

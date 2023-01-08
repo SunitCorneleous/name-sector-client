@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 
-const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit }) => {
+const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit, refetch }) => {
   const [terms, setTerms] = useState("loading");
+  const [sessionToken, setSessionToken] = useState("");
 
   useEffect(() => {
     setTerms(dataToBeEdit?.terms);
   }, [dataToBeEdit?.terms]);
 
+  useEffect(() => {
+    const token = sessionStorage.getItem("session-token");
+    setSessionToken(token);
+  }, []);
+
   const submitHandler = e => {
     e.preventDefault();
 
     const form = e.target;
-    const sessionToken = sessionStorage.getItem("session-token");
 
     const name = form.name.value;
     const sector = form.sector.value;
@@ -27,7 +32,22 @@ const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit }) => {
     } else if (sector === "select a sector") {
       return alert("select a sector sector");
     } else {
-      console.log(data);
+      fetch(`http://localhost:5000/edit-person-data/${dataToBeEdit._id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify(data),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.modifiedCount) {
+            refetch();
+            setDataToBeEdit(null);
+            alert("Data edited successfully");
+          }
+        });
     }
   };
 
