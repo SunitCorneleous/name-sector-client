@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const DataInput = ({ refetch }) => {
-  const [sectors, setSectors] = useState([]);
+const DataInput = ({ refetch, sectors }) => {
   const [terms, setTerms] = useState(false);
 
   const getSessionId = async () => {
@@ -19,15 +18,6 @@ const DataInput = ({ refetch }) => {
     if (sessionStorage.getItem("session-token") === null) {
       getSessionId();
     }
-  }, []);
-
-  // sectors
-  useEffect(() => {
-    fetch("http://localhost:5000/sectors")
-      .then(res => res.json())
-      .then(data => {
-        setSectors(data[0].sectors);
-      });
   }, []);
 
   const submitHandler = e => {

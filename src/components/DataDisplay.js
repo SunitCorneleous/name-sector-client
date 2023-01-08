@@ -1,7 +1,7 @@
 import React from "react";
 import Spinner from "./shared/Spinner";
 
-const DataDisplay = ({ data, isLoading }) => {
+const DataDisplay = ({ data, isLoading, setDataToBeEdit }) => {
   if (isLoading) {
     return (
       <div className="md:flex-1 w-full h-44 flex justify-center items-center">
@@ -30,7 +30,13 @@ const DataDisplay = ({ data, isLoading }) => {
                   <td>
                     {sessionStorage.getItem("session-token") ===
                       person?.sessionToken && (
-                      <button className="btn btn-sm btn-primary">Edit</button>
+                      <label
+                        className="btn btn-sm btn-primary"
+                        htmlFor="editDataModal"
+                        onClick={() => setDataToBeEdit(person)}
+                      >
+                        Edit
+                      </label>
                     )}
                   </td>
                 </tr>
