@@ -60,24 +60,13 @@ const EditDataModal = ({ dataToBeEdit, sectors, setDataToBeEdit }) => {
               <label className="label">
                 <span className="label-text">Select your sector:</span>
               </label>
-              <select
-                name="sector"
-                className="select select-bordered"
-                value={dataToBeEdit?.sector}
-              >
-                {sectors?.map((sector, i) => {
-                  const checked = sector === dataToBeEdit?.sector;
-
-                  if (checked) {
-                    return (
-                      <option key={i} value={sector} defaultValue>
-                        {sector}
-                      </option>
-                    );
-                  } else {
-                    return <option key={i} value={sector}></option>;
-                  }
-                })}
+              <select name="sector" className="select select-bordered">
+                <option defaultChecked>{dataToBeEdit?.sector}</option>
+                {sectors?.map((sector, i) => (
+                  <option key={i} value={sector}>
+                    {sector}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="form-control w-[50%] md:w-[30%]">
