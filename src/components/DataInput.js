@@ -4,6 +4,23 @@ const DataInput = ({ refetch }) => {
   const [sectors, setSectors] = useState([]);
   const [terms, setTerms] = useState(false);
 
+  const getSessionId = async () => {
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    const res = await fetch(
+      `http://localhost:5000/session-id?time=${currentTime}`
+    );
+    const data = await res.json();
+
+    sessionStorage.setItem("session-token", data.token);
+  };
+
+  useEffect(() => {
+    if (sessionStorage.getItem("session-token") === null) {
+      getSessionId();
+    }
+  }, []);
+
   // sectors
   useEffect(() => {
     fetch("http://localhost:5000/sectors")
@@ -17,6 +34,7 @@ const DataInput = ({ refetch }) => {
     e.preventDefault();
 
     const form = e.target;
+    const sessionToken = sessionStorage.getItem("session-token");
 
     const name = form.name.value;
     const sector = form.sector.value;
@@ -25,6 +43,7 @@ const DataInput = ({ refetch }) => {
       name,
       sector,
       terms,
+      sessionToken,
     };
 
     if (name === "") {
@@ -52,7 +71,7 @@ const DataInput = ({ refetch }) => {
   };
 
   return (
-    <div className="p-4 m-3 md:p-8 shadow-lg max-w-full h-full md:flex-1">
+    <div className="p-4 m-3 md:p-8 shadow-lg max-w-full h-full md:flex-1 rounded-lg">
       <form onSubmit={submitHandler}>
         <div className="form-control w-full">
           <label className="label">
@@ -84,6 +103,7 @@ const DataInput = ({ refetch }) => {
               name="terms"
               type="checkbox"
               className="checkbox checkbox-primary"
+              checked={terms}
               onChange={() => setTerms(!terms)}
             />
             <span className="label-text">Agree the Terms</span>

@@ -16,7 +16,7 @@ function App() {
   });
 
   return (
-    <div className="max-w-[1280px] mx-auto">
+    <div className="max-w-[1280px] mx-auto pb-14 md:pb-8">
       <h1 className="text-center md:text-3xl font-bold py-4">
         Enter your name and the sector you are related
       </h1>

@@ -28,7 +28,10 @@ const DataDisplay = ({ data, isLoading }) => {
                   <td>{person.sector}</td>
                   <td>{person.terms ? "Yes" : "No"}</td>
                   <td>
-                    <button className="btn btn-sm btn-primary">Edit</button>
+                    {sessionStorage.getItem("session-token") ===
+                      person?.sessionToken && (
+                      <button className="btn btn-sm btn-primary">Edit</button>
+                    )}
                   </td>
                 </tr>
               );
